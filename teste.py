@@ -24,7 +24,7 @@ def wb():
         
         return cv2.imencode('.jpg', frame)[1].tobytes()
 
-print(type(wb()))
+#print(type(wb()))
     
     
 #cam = cv2.VideoCapture(0)
