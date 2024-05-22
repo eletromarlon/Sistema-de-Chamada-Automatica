@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package helloworld; // Substitua por seu nome de pacote
+
+service Greeter {
+  rpc SayHello(HelloRequest) returns (HelloReply);
+}
+
+message HelloRequest {
+  string name = 1;
+  bytes data = 2; // Opcional para enviar dados binários
+}
+
+message HelloReply {
+  bytes data = 1; // Opcional para enviar dados binários
+}

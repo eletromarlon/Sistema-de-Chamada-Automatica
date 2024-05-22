@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package mensagem;
+
+service ImagemService {
+  rpc UploadImagem (stream ImagemRequest) returns (stream ImagemResposta);
+}
+
+message ImagemRequest {
+  bytes imagem = 1;
+}
+
+message ImagemResposta {
+  string mensagem = 1;
+}
