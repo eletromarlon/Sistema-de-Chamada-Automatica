@@ -3,29 +3,46 @@ import grpc_image2_pb2 as pb2
 import grpc_image2_pb2_grpc as pb2_grpc
 import grpc
 
-with grpc.insecure_channel('localhost:50051') as channel:
-    stub = pb2_grpc.GreeterStub(channel)
+def sca_shipper(
+    id_sender: str = 'empty',
+    server_ip: str = 'localhost',
+    server_port: str = '50051',
+    type: int = 1,
+    id_turma: int = 0,
+    hora_captura: str = '00:00:00',
+    data_captura: str = '14/01/1991',
+    img_data: str = '',
+    net_status: int = 0
+):
+    with grpc.insecure_channel(server_ip + ':' + server_port) as channel:
+        stub = pb2_grpc.GreeterStub(channel)
 
-    # Criar dados JSON para enviar
-    data = {
-        'mensagem': 'Ola do Cliente!',
-        'notificacao':"erro no server"
-    }
+        # Criar dados JSON para enviar
+        data = {
+            'type': type,
+            'id_turma': id_turma,
+            'hora': hora_captura,
+            'data': data_captura,
+            'img_data': img_data,
+            'net_status': net_status
+        }
 
-    # Converter dados JSON em bytes
-    data_bytes = json.dumps(data).encode('utf-8')
+        # Converter dados JSON em bytes
+        data_bytes = json.dumps(data).encode('utf-8')
 
-    # Criar a requisição
-    request = pb2.HelloRequest(name='Fulano', data=data_bytes)
+        # Criar a requisição
+        request = pb2.HelloRequest(name=id_sender, data=data_bytes)
 
-    # Chamar o método RPC e receber a resposta
-    response = stub.SayHello(request)
+        # Chamar o método RPC e receber a resposta
+        response = stub.SayHello(request)
 
-    # Carregar dados JSON da resposta
-    resposta_data = json.loads(response.data)
+        # Carregar dados JSON da resposta
+        resposta_data = json.loads(response.data)
 
-    # Imprimir a mensagem de resposta
-    print(resposta_data['data'])
+        # Imprimir a mensagem de resposta
+        #print(resposta_data['data'])
+
+        return resposta_data
 '''
 
 
