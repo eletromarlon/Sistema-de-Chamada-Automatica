@@ -1,22 +1,34 @@
-from time import sleep
-import time
 import cv2
+from picamera2 import Picamera2
+from time import sleep
 
 def take_photo():
     '''
     Return a numpy.ndarray type 
     '''
+    
     # Carrega o classificador pré-treinado para detecção de rostos
     face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
     # Inicia a captura de vídeo da câmera
-    cap = cv2.VideoCapture(0)
+    #cap = cv2.VideoCapture(0)
+
+    picam2 = Picamera2()
+    picam2.configure(picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (1080, 720)})) # type: ignore
+    picam2.start() #                                                                          (2592, 1944)
+    
+    # Carrega o classificador pré-treinado para detecção de rostos
+    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+
+    # Inicia a captura de vídeo da câmera
+    #cap = cv2.VideoCapture(0)
 
     teste = 0
 
     while True:
         # Captura um quadro da câmera
-        ret, frame = cap.read()
+        #ret, frame = cap.read()
+        frame = picam2.capture_array()
 
         # Converte o quadro para escala de cinza para detecção de rostos
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -27,7 +39,7 @@ def take_photo():
         # Se um rosto for detectado, exibe uma mensagem e tira uma foto
         if len(faces) > 0:
             # Força o aguardo para que o rosto esteja mais estático. Pode ser adicionado um sleep e mudar a mensagem
-            if teste < 15:
+            if teste < 5:
                 print("Aguarde...                              ", end='\r')
                 teste += 1
                 continue
@@ -44,6 +56,6 @@ def take_photo():
         
 
     # Libera a captura de vídeo e fecha a janela
-    cap.release()
-    cv2.destroyAllWindows()
+    #cap.release()
+    #cv2.destroyAllWindows()
     return frame
