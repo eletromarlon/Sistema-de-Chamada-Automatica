@@ -1,15 +1,21 @@
 import cv2
+from picamera2 import Picamera2
 
 # Carrega o classificador pré-treinado para detecção de rostos
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
 # Inicia a captura de vídeo da câmera
-cap = cv2.VideoCapture(0)
+#cap = cv2.VideoCapture(0)
+
+picam2 = Picamera2()
+picam2.configure(picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (2592, 1944)})) # type: ignore
+picam2.start()
 
 while True:
+    frame = picam2.capture_array()
     # Captura um quadro da câmera
-    ret, frame = cap.read()
-
+    #ret, frame = cap.read()
+    
     # Converte o quadro para escala de cinza para detecção de rostos
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
@@ -27,5 +33,5 @@ while True:
         break
 
 # Libera a captura de vídeo e fecha a janela
-cap.release()
-cv2.destroyAllWindows()
+#cap.release()
+#cv2.destroyAllWindows()
