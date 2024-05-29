@@ -1,3 +1,4 @@
+'''
 import json
 import grpc_image2_pb2 as pb2
 import grpc_image2_pb2_grpc as pb2_grpc
@@ -43,6 +44,39 @@ def sca_shipper(
         #print(resposta_data['data'])
 
         return resposta_data
+'''
+import grpc
+import grpc_image2_pb2
+import grpc_image2_pb2_grpc
+import time
+
+def run():
+    with grpc.insecure_channel('192.168.0.13:50051') as channel:
+        stub = grpc_image2_pb2_grpc.EnvioDeMensagensStub(channel)
+        request = grpc_image2_pb2.ClienteParaServidor(
+            type=1,
+            id_turma="turma1",
+            id_disciplina="disciplina1",
+            id_aluno="aluno1",
+            time=int(time.time()),
+            image=b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x08\x06\x00\x00\x00\x1f\x15\xc4\x89\x00\x00\x00\nIDATx\x9cc``\x00\x00\x00\x02\x00\x01\xe2!\xbc\x82\x00\x00\x00\x00IEND\xaeB`\x82',
+            name="John Doe"
+        )
+        response = stub.EnviarMensagem(request)
+        print("Resposta recebida:")
+        print(f"type: {response.type}")
+        print(f"id_turma: {response.id_turma}")
+        print(f"id_disciplina: {response.id_disciplina}")
+        print(f"id_aluno: {response.id_aluno}")
+        print(f"time: {response.time}")
+        print(f"name: {response.name}")
+        print(f"num_faltas: {response.num_faltas}")
+        # Use response.image e response.repositorio conforme necessário
+
+if __name__ == '__main__':
+    run()
+
+
 '''
 
 
