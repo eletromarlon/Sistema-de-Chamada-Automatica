@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package exemplo;
+package sca_ufc;
 
 // Define a mensagem do cliente para o servidor
 message ClienteParaServidor {
