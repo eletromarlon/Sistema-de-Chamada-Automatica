@@ -8,7 +8,7 @@ message ClienteParaServidor {
     string id_turma = 2;
     string id_disciplina = 3;
     string id_aluno = 4;
-    int64 time = 5;  // Timestamp geralmente é representado como int64
+    float time = 5;  // Timestamp geralmente é representado como int64
     bytes image = 6;
     string name = 7;
 }
@@ -19,7 +19,7 @@ message ServidorParaCliente {
     string id_turma = 2;
     string id_disciplina = 3;
     string id_aluno = 4;
-    int64 time = 5;
+    float time = 5;
     bytes image = 6;
     string name = 7;
     int32 num_faltas = 8;
