@@ -19,7 +19,8 @@ def run_client():
     sock.settimeout(5)
     try:
         data, addr = sock.recvfrom(1024)
-        print(f"Resposta recebida: {data} de {addr}")
+        print(f"Resposta recebida: {(data).decode('utf-8')} de {addr}")
+        return [addr[0], data]
     except socket.timeout:
         print("Nenhuma resposta recebida dentro do tempo limite.")
 
