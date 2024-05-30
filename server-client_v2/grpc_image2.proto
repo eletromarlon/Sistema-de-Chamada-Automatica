@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package sca_ufc;
+
+// Define a mensagem do cliente para o servidor
+message ClienteParaServidor {
+    int32 type = 1;
+    string id_turma = 2;
+    string id_disciplina = 3;
+    string id_aluno = 4;
+    float time = 5;  // Timestamp geralmente é representado como int64
+    bytes image = 6;
+    string name = 7;
+}
+
+// Define a mensagem do servidor para o cliente
+message ServidorParaCliente {
+    int32 type = 1;
+    string id_turma = 2;
+    string id_disciplina = 3;
+    string id_aluno = 4;
+    float time = 5;
+    bytes image = 6;
+    string name = 7;
+    int32 num_faltas = 8;
+    bytes repositorio = 9;
+}
+
+// Define o serviço de envio da mensagem do cliente para o servidor
+service EnvioDeMensagens {
+    rpc EnviarMensagem(ClienteParaServidor) returns (ServidorParaCliente);
+}
