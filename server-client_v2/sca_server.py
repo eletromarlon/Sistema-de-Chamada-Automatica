@@ -1,5 +1,7 @@
 from concurrent import futures
 from deepface_rcgn import stream_compare
+from sca_discover_server import run_server
+
 import json, cv2, base64, grpc, time, socket, struct, threading
 import grpc_image2_pb2
 import grpc_image2_pb2_grpc
@@ -55,14 +57,15 @@ def serve():
     server.add_insecure_port('[::]:50051')
     server.start()
     print("Servidor iniciado na porta 50051")
+    threading.Thread(run_server(), daemon=True).start()
     try:
         while True:
             time.sleep(86400)
     except KeyboardInterrupt:
         server.stop(0)
+        exit()
 
     # Inicia a thread de anúncio multicast
-    threading.Thread(target=multicast_announcement, daemon=True).start()
 
 if __name__ == '__main__':
     serve()
