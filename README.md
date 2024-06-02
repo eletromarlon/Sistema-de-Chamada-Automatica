@@ -56,8 +56,10 @@ Este sistema foi desenvolvido como parte do Trabalho de Conclusão de Curso (TCC
 ### Passo a Passo
 
 1. **Clonar o Repositório**
-   <pre><div class="dark bg-gray-950 rounded-md border-[0.5px] border-token-border-medium"><div class="flex items-center relative text-token-text-secondary bg-token-main-surface-secondary px-4 py-2 text-xs font-sans justify-between rounded-t-md"><span>bash</span><div class="flex items-center"><span class="" data-state="closed"></span></div></div><div class="overflow-y-auto p-4 text-left undefined" dir="ltr"><code class="!whitespace-pre hljs language-bash">git clone https://github.com/eletromarlon/Sistema-de-Chamada-Automatica.git
+   ```bash
+   git clone https://github.com/eletromarlon/Sistema-de-Chamada-Automatica.git
    cd Sistema-de-Chamada-Automatica
+   ```
 
 ## 📄 Estrutura do Projeto
 
