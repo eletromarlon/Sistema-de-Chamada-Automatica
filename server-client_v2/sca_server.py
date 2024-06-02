@@ -1,9 +1,8 @@
 from concurrent import futures
-
-import numpy as np
 from sca_recognizer import stream_compare, train
 from sca_discover_server import run_server
 
+import numpy as np
 import json, cv2, base64, grpc, time, socket, struct, threading, os
 import grpc_image2_pb2
 import grpc_image2_pb2_grpc
