@@ -1,9 +1,9 @@
 from concurrent import futures
-from sca_recognizer import stream_compare, train
+from sca_recognizer import face_compare, pkl_generator
 from sca_discover_server import run_server
 
 import numpy as np
-import json, cv2, base64, grpc, time, socket, struct, threading, os
+import cv2, grpc, time, threading, os
 import grpc_image2_pb2
 import grpc_image2_pb2_grpc
 
@@ -35,7 +35,7 @@ class EnvioDeMensagensServicer(grpc_image2_pb2_grpc.EnvioDeMensagensServicer):
         cv2.imwrite('image.jpg', image)
        
        # Realizando o reconhecimento a partir da imagem salva na linha anterior
-        result = stream_compare('/home/avell/Documentos/projetos/Sistema-de-Chamada-Automatica/image.jpg', '/home/avell/Documentos/projetos/Sistema-de-Chamada-Automatica/marlon', 3)
+        result = face_compare('/home/avell/Documentos/projetos/Sistema-de-Chamada-Automatica/image.jpg', '/home/avell/Documentos/projetos/Sistema-de-Chamada-Automatica/marlon', 3)
 
         #print(f'Valor retornado pela função de reconhecimento facial\n{result}')
 
