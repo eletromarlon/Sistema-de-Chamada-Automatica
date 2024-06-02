@@ -5,7 +5,7 @@ from deepface import DeepFace
 # Melhores modelos para detecção -> alinhamento -> extração -> reconhecimento
 par_detector_model = [['mtcnn', 'Facenet'],['mtcnn', 'ArcFace'], ['yolov8', 'Facenet'], ['yolov8', 'ArcFace']]
 
-def stream_compare(
+def face_compare(
         img_path: str = '', 
         db_path: str = '', 
         detector_model: int = 3
@@ -41,32 +41,7 @@ def stream_compare(
     except:
         return ["Unknown",float("inf"), par_detector_model[detector_model][1] , par_detector_model[detector_model][0]]
 
-def compare():
-    rodadas = "/home/avell/Documents/teste_dataset/rodadas_DF"
-    dfs = []
-    for rodada in os.listdir(rodadas):
-        pasta_da_rodada = os.path.join(rodadas, rodada)
-        for i in os.listdir(pasta_da_rodada):
-            if i == "test":
-                pasta_de_test = os.path.join(pasta_da_rodada, i)
-                for j in os.listdir(pasta_de_test):
-                    if j == "images":
-                        pasta_de_img = os.path.join(pasta_de_test, j)
-                        for k in os.listdir(pasta_de_img):
-                            db_path = os.path.join(pasta_da_rodada, "train", "images")
-                            img_path = os.path.join(pasta_de_img, k)
-                            print("Imagem: ", img_path) # deve ser só a imagem
-                            print("Rodada: ", db_path) # Deve ser só a rodada
-                            dfs.append(DeepFace.find(
-                                        img_path=img_path,
-                                        db_path=db_path,
-                                        model_name="Dlib",
-                                        enforce_detection=False,
-                                        detector_backend='yolov8'
-                                        )
-                            )
-
-def train(
+def pkl_generator(
         img_path: str = '',
         db_path: str = ''
         ):
@@ -81,25 +56,3 @@ def train(
     '''
     for i in range(4):
         stream_compare(img_path, db_path, i)
-
-
-def compare_faces(image1_path, image2_path, detector, modelo):
-    # Carregar as imagens
-
-    # Verificar a similaridade entre os rostos
-    result = DeepFace.verify(
-        img1_path=image1_path, 
-        img2_path=image2_path, 
-        enforce_detection=False
-        )
-
-    # Definir um limiar de similaridade
-    threshold = 0.6
-
-    # Verificar se os rostos são semelhantes
-    if result["verified"] and result["distance"] < threshold:
-        #print("Os rostos são semelhantes.")
-        return True
-    else:
-        #print("Os rostos são diferentes.")
-        return False
