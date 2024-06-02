@@ -2,6 +2,8 @@ import cv2, os
 from picamera2 import Picamera2
 from time import sleep
 
+WAIT_TIME = 10
+
 def take_photo(
     method: str = 'picamera'
 ):
@@ -41,7 +43,7 @@ def take_photo(
             # Se um rosto for detectado, exibe uma mensagem e tira uma foto
             if len(faces) > 0:
                 # Força o aguardo para que o rosto esteja mais estático evitando sombras e/ou distorções. Pode ser adicionado um sleep e mudar a mensagem
-                if teste < 5:
+                if teste < WAIT_TIME:
                     print("Aguarde...                              ", end='\r')
                     teste += 1
                     continue
@@ -89,7 +91,7 @@ def take_photo(
             # Se um rosto for detectado, exibe uma mensagem e tira uma foto
             if len(faces) > 0:
                 # Força o aguardo para que o rosto esteja mais estático. Pode ser adicionado um sleep e mudar a mensagem
-                if teste < 5:
+                if teste < WAIT_TIME:
                     print("Aguarde...                                        ", end='\r')
                     teste += 1
                     continue
