@@ -6,17 +6,21 @@ def take_photo(
     method: str = 'picamera'
 ):
     '''
-    Return a numpy.ndarray type 
+    Tire uma foto utilizando um entre dois métodos: Opencv ou Picamera2. 
     
-    method: ('picamera' or 'opencv') Recebe uma string com o method de captura de imagem desejado. Por padrão o método escolhido
-    é o 'picamera' que utiliza uma bilioteca que tem acesso à camera do modulo do raspberry.
+    Args:
+        method: ('picamera' or 'opencv') Recebe uma string com o method de captura de imagem desejado. Por padrão o método escolhido
+        é o 'picamera' que utiliza uma bilioteca que tem acesso à camera do modulo do raspberry.
+    
+    Returns:
+        ndarray da imagem retirada pela camera
     '''
     
     if method == 'opencv':
         # Carrega o classificador pré-treinado para detecção de rostos
         face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-        # Inicia a captura de vídeo da câmera
+        # Inicia a captura de vídeo da câmera entre dois caminhos de camera diferente. Podem haver mais além desses
         try:
             cap = cv2.VideoCapture(0)
         except:
@@ -36,16 +40,13 @@ def take_photo(
 
             # Se um rosto for detectado, exibe uma mensagem e tira uma foto
             if len(faces) > 0:
-                # Força o aguardo para que o rosto esteja mais estático. Pode ser adicionado um sleep e mudar a mensagem
+                # Força o aguardo para que o rosto esteja mais estático evitando sombras e/ou distorções. Pode ser adicionado um sleep e mudar a mensagem
                 if teste < 5:
                     print("Aguarde...                              ", end='\r')
                     teste += 1
                     continue
 
                 print("Rosto detectado! Fotografia será registrada.", end='\r')
-                
-                # Salva a foto do rosto
-                #cv2.imwrite('rostro_detectado.jpg', frame)
                 
                 # Termina o loop para evitar que tire mais de uma foto por detecção de rosto
                 break
@@ -62,17 +63,16 @@ def take_photo(
         # Carrega o classificador pré-treinado para detecção de rostos
         face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
+        # Preparando a captura de imagem a partir da lib Picamera utilizando o modulo de camera do raspberry
         picam2 = Picamera2()
         picam2.configure(picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (1080, 720)})) # type: ignore
         picam2.start() #                                                                          (2592, 1944)
         
+        # Limpando a tela - desnecessário
         os.system("clear")
         
         # Carrega o classificador pré-treinado para detecção de rostos
         face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-
-        # Inicia a captura de vídeo da câmera
-        cap = cv2.VideoCapture(0)
 
         teste = 0
 
@@ -96,17 +96,13 @@ def take_photo(
 
                 print("Rosto detectado! Imagem registrada.", end='\r')
                 
-                # Salva a foto do rosto
-                #cv2.imwrite('rostro_detectado.jpg', frame)
-                
                 # Termina o loop para evitar que tire mais de uma foto por detecção de rosto
                 break
             else:
                 print("Sem rostos para registrar!", end='\r')
             
 
-        # Libera a captura de vídeo e fecha a janela
-
+        # Libera a captura de vídeo e o dispositivo modulo de camera
         picam2.close()
         
         return frame
