@@ -5,26 +5,33 @@ from datetime import datetime
 from sca_discover_client import run_client
 from cam_auto_take import take_photo
 
-ip_server = run_client()
+server_ip = None
+SCA_LOG = []
+
+while server_ip == None:
+    server_ip = run_client()
 
 while KeyboardInterrupt:
     imagem = take_photo()
 
-    img_64 = base64.b64encode(imagem)  #.decode('utf-8')
-
+    #print((bytes(imagem))[:10])
+    
+    '''img_64 = base64.b64encode(imagem)  #.decode('utf-8')'''
+    
+    '''print(img_64[:100])'''
+    
     saida  = client.sca_shipper(
-        server_ip=ip_server[0],
-        img_data=img_64
+        server_ip=server_ip[0],
+        img_data=bytes(imagem)
     )
-
-    tempo = time.gmtime(float(saida.time))
-
-    print(f'Dia/Mes/Ano {tempo[2]}/{tempo[1]}/{tempo[0]}')
-
-
-#img = np.frombuffer((saida['data']).encode('utf-8'), dtype=np.uint8).reshape((640,480,4))
-#img = (saida['data']).encode('utf-8') #.reshape((640,480,4))
-#img2 = base64.b64decode(saida.encode('utf-8'))
-#img = np.frombuffer(img2, dtype=np.uint8).reshape(720,1080,4)
-#cv2.imshow('img', img )
-#cv2.waitKey()
+    
+    #print(f'Erro\nDados não enviados ou Rosto não reconhecido\nMensagem de erro\n{saida}')
+    
+    try:
+        tempo = time.gmtime(float(saida.time))
+        SCA_LOG.append([saida.name, tempo])
+        print(f'Dia/Mes/Ano {tempo[2]}/{tempo[1]}/{tempo[0]}')
+        print(f"Rosto encontrado {saida.name}")
+        time.sleep(2)
+    except:
+        ('Sem dados de tempo')
