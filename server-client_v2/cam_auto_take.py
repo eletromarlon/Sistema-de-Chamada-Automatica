@@ -1,4 +1,4 @@
-import cv2
+import cv2, os
 from picamera2 import Picamera2
 from time import sleep
 
@@ -66,6 +66,8 @@ def take_photo(
         picam2.configure(picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (1080, 720)})) # type: ignore
         picam2.start() #                                                                          (2592, 1944)
         
+        os.system("clear")
+        
         # Carrega o classificador pré-treinado para detecção de rostos
         face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
@@ -88,11 +90,11 @@ def take_photo(
             if len(faces) > 0:
                 # Força o aguardo para que o rosto esteja mais estático. Pode ser adicionado um sleep e mudar a mensagem
                 if teste < 5:
-                    print("Aguarde...                              ", end='\r')
+                    print("Aguarde...                                        ", end='\r')
                     teste += 1
                     continue
 
-                print("Rosto detectado! Fotografia será registrada.", end='\r')
+                print("Rosto detectado! Imagem registrada.", end='\r')
                 
                 # Salva a foto do rosto
                 #cv2.imwrite('rostro_detectado.jpg', frame)

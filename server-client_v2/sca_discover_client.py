@@ -1,12 +1,13 @@
-import socket
-import struct
-import time
+import socket, time, os
 
 MCAST_GRP = '224.1.1.1'
 MCAST_PORT = 5007
 CLIENT_MSG = b'Cliente buscando servidor'
 
 def run_client():
+    
+    os.system("clear")
+    
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
     sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 2)
 
@@ -22,7 +23,7 @@ def run_client():
         print(f"Resposta recebida: {(data).decode('utf-8')} de {addr}")
         return [addr[0], data]
     except socket.timeout:
-        print("Nenhuma resposta recebida dentro do tempo limite.")
+        return None
 
 #if __name__ == '__main__':
 #    run_client()
