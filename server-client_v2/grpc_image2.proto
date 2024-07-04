@@ -10,7 +10,8 @@ message ClienteParaServidor {
     string id_aluno = 4;
     float time = 5;  // Timestamp geralmente é representado como int64
     bytes image = 6;
-    string name = 7;
+    string shape = 7; //formato da imagem enviada pelo cliente 480x640 por exemplo
+    string name = 8;
 }
 
 // Define a mensagem do servidor para o cliente
