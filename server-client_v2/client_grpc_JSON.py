@@ -18,7 +18,8 @@ def sca_shipper(
     disciplina_id: str = 'vazio',
     aluno_id: str = 'vazio',
     time: float = time.time(),
-    img_data: str = b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x08\x06\x00\x00\x00\x1f\x15\xc4\x89\x00\x00\x00\nIDATx\x9cc``\x00\x00\x00\x02\x00\x01\xe2!\xbc\x82\x00\x00\x00\x00IEND\xaeB`\x82'
+    img_data: str = b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x08\x06\x00\x00\x00\x1f\x15\xc4\x89\x00\x00\x00\nIDATx\x9cc``\x00\x00\x00\x02\x00\x01\xe2!\xbc\x82\x00\x00\x00\x00IEND\xaeB`\x82',
+    img_shape: str = "1080x720"
 ):
     '''
     Função ... escrever a documentação
@@ -32,6 +33,7 @@ def sca_shipper(
             id_aluno=aluno_id,
             time=time,
             image= img_data,
+            shape=img_shape,
             name=name
         )
         
