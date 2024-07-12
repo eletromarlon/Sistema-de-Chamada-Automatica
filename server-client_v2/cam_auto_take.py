@@ -1,8 +1,9 @@
 import cv2, os
 from picamera2 import Picamera2
 from time import sleep
+from display_1602a import display_lcd
 
-WAIT_TIME = 10
+WAIT_TIME = 5
 
 def take_photo(
     method: str = 'picamera'
@@ -45,16 +46,17 @@ def take_photo(
                 # Força o aguardo para que o rosto esteja mais estático evitando sombras e/ou distorções. Pode ser adicionado um sleep e mudar a mensagem
                 if teste < WAIT_TIME:
                     print("Aguarde...                              ", end='\r')
+                    display_lcd("Aguarde...@Fique parado!", time=1)
                     teste += 1
                     continue
 
-                print("Rosto detectado! Fotografia será registrada.", end='\r')
-                
+                print("Rosto detectado!Registrando", end='\r')
+                display_lcd("Rosto detectado!Reconhecendo...", time=1)
                 # Termina o loop para evitar que tire mais de uma foto por detecção de rosto
                 break
             else:
                 print("Sem rostos para registrar!", end='\r')
-
+                display_lcd("Sem rostos @a registrar.")
 
             # Libera a captura de vídeo e fecha a janela
             cap.release()
@@ -93,15 +95,18 @@ def take_photo(
                 # Força o aguardo para que o rosto esteja mais estático. Pode ser adicionado um sleep e mudar a mensagem
                 if teste < WAIT_TIME:
                     print("Aguarde...                                        ", end='\r')
+                    display_lcd("Aguarde...@Fique parado!", time=1)
                     teste += 1
                     continue
 
                 print("Rosto detectado! Imagem registrada.", end='\r')
+                display_lcd("Rosto detectado!Reconhecendo...", time=1)
                 
                 # Termina o loop para evitar que tire mais de uma foto por detecção de rosto
                 break
             else:
                 print("Sem rostos para registrar!", end='\r')
+                display_lcd("Sem rostos@a registrar.")
             
 
         # Libera a captura de vídeo e o dispositivo modulo de camera
