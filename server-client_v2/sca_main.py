@@ -45,7 +45,10 @@ def get_img_db(server_ip, id_turma):
                     server_ip=server_ip
                 )
         save_file(saida.repositorio, id_turma)
-        os.system(f'unzip {id_turma} -d ./static/images ')
+        try:
+            os.system(f'unzip {id_turma}')
+        except:
+            print("Não foi possível extrair o arquivo")
         if saida.name == 'True':
             return True
     return False
