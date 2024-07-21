@@ -1,0 +1,53 @@
+# Use a imagem base mais recente do Ubuntu
+FROM ubuntu:latest
+
+# Atualize o sistema e instale dependências necessárias
+RUN apt-get update && apt-get install ffmpeg libsm6 libxext6 -y
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-venv \
+    libcap2 \
+    sqlite3 \
+    --no-install-recommends && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Defina o diretório de trabalho
+WORKDIR /app
+
+# Crie um ambiente virtual
+RUN python3 -m venv .
+
+# Ative o ambiente virtual e instale dependências
+COPY requirements.txt requirements.txt
+RUN . bin/activate && pip install grpcio
+RUN . bin/activate && pip install grpcio-tools
+RUN . bin/activate && pip install numpy
+RUN . bin/activate && pip install opencv-python
+RUN . bin/activate && pip install deepface
+RUN . bin/activate && pip install tk
+RUN . bin/activate && pip install tensorflow
+RUN . bin/activate && pip install tf-keras
+RUN . bin/activate && pip install ultralytics
+RUN . bin/activate && pip install tensorflow
+RUN . bin/activate && pip install mtcnn
+RUN . bin/activate && pip install pandas
+RUN . bin/activate && pip install flask
+
+# Copie o código da aplicação para o container
+COPY /server-client_v2/* /app/server-client_v2/
+COPY start_system.sh /app/
+COPY app.py /app/
+COPY sca-start.py /app/
+COPY /templates/* /app/templates/
+COPY /static/ /app/static/
+COPY /db_images/ /app/db_images/
+
+# Exponha a porta em que a aplicação será executada
+EXPOSE 5000
+EXPOSE 5007/udp
+EXPOSE 50051
+
+# Comando para rodar a aplicação Flask
+CMD ["./start_system.sh"]

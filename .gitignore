@@ -1,14 +1,22 @@
 # created by virtualenv automatically
-/lib*
+__pycache__
 /bin*
 /include*
+/lib*
+/lib64*
 pyvenv*
+/share*
+teste.db
+sca_db
+image.jpg
+Pendencias*
+/GoServerTest
+/img_db
 /server-client_v2/__pycache__*
 server-client_v2/grpc_image2_pb2_grpc.zip
 server-client_v2/grpc_image2_pb2_grpc.py
 server-client_v2/grpc_image2_pb2.py
 teste.py
 rodada_1
-__pycache__
 marlon
 train

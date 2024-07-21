@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container text-center">
+      <div class="text-center fw-bold">Sistema de Chamada Automática</div>
+      <div class="text-center fst-italic">Desenvolvido por Marlon Duarte</div>
+    </div>
+    <!--
+      Nesta Div abaixo deverá ficar o código do login
+    -->
+    <div class="container">
+      <div class="row">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Matrícula</th>
+              <th scope="col">Nome do Aluno</th>
+              <th scope="col">Turma</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">{{tabela[0][0]}}</th>
+              <td>{{tabela[0][1]}}</td>
+              <td>{{tabela[0][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[1][0]}}</th>
+              <td>{{tabela[1][1]}}</td>
+              <td>{{tabela[1][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[2][0]}}</th>
+              <td>{{tabela[2][1]}}</td>
+              <td>{{tabela[2][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[3][0]}}</th>
+              <td>{{tabela[3][1]}}</td>
+              <td>{{tabela[3][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[4][0]}}</th>
+              <td>{{tabela[4][1]}}</td>
+              <td>{{tabela[4][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[5][0]}}</th>
+              <td>{{tabela[5][1]}}</td>
+              <td>{{tabela[5][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[6][0]}}</th>
+              <td>{{tabela[6][1]}}</td>
+              <td>{{tabela[6][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[7][0]}}</th>
+              <td>{{tabela[7][1]}}</td>
+              <td>{{tabela[7][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[8][0]}}</th>
+              <td>{{tabela[8][1]}}</td>
+              <td>{{tabela[8][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[9][0]}}</th>
+              <td>{{tabela[9][1]}}</td>
+              <td>{{tabela[9][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[10][0]}}</th>
+              <td>{{tabela[10][1]}}</td>
+              <td>{{tabela[10][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[11][0]}}</th>
+              <td>{{tabela[11][1]}}</td>
+              <td>{{tabela[11][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[12][0]}}</th>
+              <td>{{tabela[12][1]}}</td>
+              <td>{{tabela[12][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[13][0]}}</th>
+              <td>{{tabela[13][1]}}</td>
+              <td>{{tabela[13][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[14][0]}}</th>
+              <td>{{tabela[14][1]}}</td>
+              <td>{{tabela[14][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[15][0]}}</th>
+              <td>{{tabela[15][1]}}</td>
+              <td>{{tabela[15][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[16][0]}}</th>
+              <td>{{tabela[16][1]}}</td>
+              <td>{{tabela[16][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[17][0]}}</th>
+              <td>{{tabela[17][1]}}</td>
+              <td>{{tabela[17][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[18][0]}}</th>
+              <td>{{tabela[18][1]}}</td>
+              <td>{{tabela[18][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[19][0]}}</th>
+              <td>{{tabela[19][1]}}</td>
+              <td>{{tabela[19][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[20][0]}}</th>
+              <td>{{tabela[20][1]}}</td>
+              <td>{{tabela[20][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[21][0]}}</th>
+              <td>{{tabela[21][1]}}</td>
+              <td>{{tabela[21][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[22][0]}}</th>
+              <td>{{tabela[22][1]}}</td>
+              <td>{{tabela[22][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[23][0]}}</th>
+              <td>{{tabela[23][1]}}</td>
+              <td>{{tabela[23][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[24][0]}}</th>
+              <td>{{tabela[24][1]}}</td>
+              <td>{{tabela[24][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[25][0]}}</th>
+              <td>{{tabela[25][1]}}</td>
+              <td>{{tabela[25][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[26][0]}}</th>
+              <td>{{tabela[26][1]}}</td>
+              <td>{{tabela[26][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[27][0]}}</th>
+              <td>{{tabela[27][1]}}</td>
+              <td>{{tabela[27][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[28][0]}}</th>
+              <td>{{tabela[28][1]}}</td>
+              <td>{{tabela[28][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[29][0]}}</th>
+              <td>{{tabela[29][1]}}</td>
+              <td>{{tabela[29][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[30][0]}}</th>
+              <td>{{tabela[30][1]}}</td>
+              <td>{{tabela[30][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[31][0]}}</th>
+              <td>{{tabela[31][1]}}</td>
+              <td>{{tabela[31][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[32][0]}}</th>
+              <td>{{tabela[32][1]}}</td>
+              <td>{{tabela[32][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[33][0]}}</th>
+              <td>{{tabela[33][1]}}</td>
+              <td>{{tabela[33][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[34][0]}}</th>
+              <td>{{tabela[34][1]}}</td>
+              <td>{{tabela[34][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[35][0]}}</th>
+              <td>{{tabela[35][1]}}</td>
+              <td>{{tabela[35][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[36][0]}}</th>
+              <td>{{tabela[36][1]}}</td>
+              <td>{{tabela[36][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[37][0]}}</th>
+              <td>{{tabela[37][1]}}</td>
+              <td>{{tabela[37][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[38][0]}}</th>
+              <td>{{tabela[38][1]}}</td>
+              <td>{{tabela[38][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[39][0]}}</th>
+              <td>{{tabela[39][1]}}</td>
+              <td>{{tabela[39][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[40][0]}}</th>
+              <td>{{tabela[40][1]}}</td>
+              <td>{{tabela[40][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[41][0]}}</th>
+              <td>{{tabela[41][1]}}</td>
+              <td>{{tabela[41][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[42][0]}}</th>
+              <td>{{tabela[42][1]}}</td>
+              <td>{{tabela[42][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[43][0]}}</th>
+              <td>{{tabela[43][1]}}</td>
+              <td>{{tabela[43][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[44][0]}}</th>
+              <td>{{tabela[44][1]}}</td>
+              <td>{{tabela[44][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[45][0]}}</th>
+              <td>{{tabela[45][1]}}</td>
+              <td>{{tabela[45][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[46][0]}}</th>
+              <td>{{tabela[46][1]}}</td>
+              <td>{{tabela[46][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[47][0]}}</th>
+              <td>{{tabela[47][1]}}</td>
+              <td>{{tabela[47][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[48][0]}}</th>
+              <td>{{tabela[48][1]}}</td>
+              <td>{{tabela[48][2]}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{tabela[49][0]}}</th>
+              <td>{{tabela[49][1]}}</td>
+              <td>{{tabela[49][2]}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-5"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>

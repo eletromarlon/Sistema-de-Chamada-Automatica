@@ -55,4 +55,4 @@ def pkl_generator(
         db_path(str): Recebe o caminho 'path' do conjunto de imagens que se deseja usar como base para reconhecer
     '''
     for i in range(4):
-        stream_compare(img_path, db_path, i)
+        face_compare(img_path, db_path, i)
