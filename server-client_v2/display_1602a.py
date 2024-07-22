@@ -1,6 +1,9 @@
+from xmlrpc.client import Boolean
 import RPi.GPIO as GPIO
 from time import sleep
 import lcd1602gpio
+
+
 
 '''
 pin = 24
@@ -22,6 +25,15 @@ for x in range(1, iterations+1):
     
 
 '''
+def back_light(button: Boolean):
+    GPIO.setmode(GPIO.BCM)
+    
+    GPIO.setup(12, GPIO.OUT, initial=GPIO.HIGH)
+    if button:
+        GPIO.output(12, GPIO.HIGH)
+    else:
+        GPIO.output(12, GPIO.OUT)
+
 def display_lcd(
     word: str = '--------------------------------',
     row: int = 0 | 1,
@@ -40,6 +52,9 @@ def display_lcd(
                                                     Duarte
                                                     
     '''
+    
+    back_light(True)
+    
     if (word.find('@') != -1):
         # Disable GPIO warnings
         GPIO.setwarnings(False)
@@ -52,10 +67,10 @@ def display_lcd(
         lcd = lcd1602gpio.LCD1602GPIO_4BIT(
                 rs=8,
                 e=7,
-                db7=18,
-                db6=23,
-                db5=24,
-                db4=25)
+                db7=25,
+                db6=24,
+                db5=23,
+                db4=18)
         # write texts to Line 0 of the LCD.
         lcd.write_line(word[:word.index('@')], 0)
         # write texts to Line 1 of the LCD.
@@ -63,6 +78,7 @@ def display_lcd(
         sleep(time)
         # Do GPIO cleanup manually before exiting.
         lcd.clear_lcd()
+        back_light(button=False)
         GPIO.cleanup()
     elif(len(word) > 16):
         # Disable GPIO warnings
@@ -76,10 +92,10 @@ def display_lcd(
         lcd = lcd1602gpio.LCD1602GPIO_4BIT(
                 rs=8,
                 e=7,
-                db7=18,
-                db6=23,
-                db5=24,
-                db4=25)
+                db7=25,
+                db6=24,
+                db5=23,
+                db4=18)
 
         # write texts to Line 0 of the LCD.
         lcd.write_line(word[:16], 0)
@@ -87,6 +103,7 @@ def display_lcd(
         lcd.write_line(word[16:], 1)
         sleep(time)
         # Do GPIO cleanup manually before exiting.
+        back_light(button=False)
         lcd.clear_lcd()
         GPIO.cleanup()
     else:
@@ -101,16 +118,17 @@ def display_lcd(
         lcd = lcd1602gpio.LCD1602GPIO_4BIT(
                 rs=8,
                 e=7,
-                db7=18,
-                db6=23,
-                db5=24,
-                db4=25)
+                db7=25,
+                db6=24,
+                db5=23,
+                db4=18)
 
         # write texts to Line 0 of the LCD.
         lcd.write_line(word, 0)
         sleep(time)
         # Do GPIO cleanup manually before exiting.
+        back_light(button=False)
         lcd.clear_lcd()
         GPIO.cleanup()
-
-display_lcd(word="SCA@Marlon Duarte")
+    
+display_lcd("SCA - UFC@Marlon Duarte")
