@@ -1,4 +1,5 @@
 import cv2, os
+import cv2.data
 from picamera2 import Picamera2
 from time import sleep
 from display_1602a import display_lcd
@@ -56,7 +57,7 @@ def take_photo(
                 break
             else:
                 print("Sem rostos para registrar!", end='\r')
-                display_lcd("Sem rostos @a registrar.")
+                display_lcd(word="Sem rostos @a registrar.", time=1)
 
             # Libera a captura de vídeo e fecha a janela
             cap.release()
@@ -100,7 +101,7 @@ def take_photo(
                     continue
 
                 print("Rosto detectado! Imagem registrada.", end='\r')
-                display_lcd("Rosto detectado!Reconhecendo...", time=1)
+                display_lcd("Pronto! Já estou@Te reconhecendo", time=1)
                 
                 # Termina o loop para evitar que tire mais de uma foto por detecção de rosto
                 break
