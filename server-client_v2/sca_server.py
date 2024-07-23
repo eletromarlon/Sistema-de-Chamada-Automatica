@@ -17,6 +17,14 @@ LISTA_ALUNOS = []
 
 class EnvioDeMensagensServicer(grpc_image2_pb2_grpc.EnvioDeMensagensServicer):
     def parse_string_to_tuple(self, s: str) -> tuple:
+        """_summary_
+
+        Args:
+            s (str): _description_
+
+        Returns:
+            tuple: _description_
+        """
         # Remove os parênteses
         s = s.strip('()')
         # Divide a string em partes
@@ -212,6 +220,8 @@ class EnvioDeMensagensServicer(grpc_image2_pb2_grpc.EnvioDeMensagensServicer):
                 matricula = matricula[:matricula.find('-')]
             except:
                 matricula = result[0]
+
+            print(matricula)
 
             self.gerar_frequencia('teste.db', matricula, request.id_disciplina, request.time)
 
