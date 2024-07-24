@@ -62,7 +62,7 @@ class DatabaseManager:
                     FOREIGN KEY (codigo_disciplina) REFERENCES Disciplina(codigo_disciplina)
                 );
 
-                CREATE TABLE IF NOT EXISTS Frequencia (
+                CREATE TABLE IF NOT EXISTS Aula_Aluno (
                     id_frequencia INTEGER PRIMARY KEY AUTOINCREMENT,
                     matricula_aluno TEXT NOT NULL,
                     id_aula INTEGER NOT NULL,
@@ -70,6 +70,24 @@ class DatabaseManager:
                     presente BOOLEAN NOT NULL,
                     FOREIGN KEY (matricula_aluno) REFERENCES Aluno(matricula_aluno),
                     FOREIGN KEY (id_aula) REFERENCES Aula(id_aula)
+                );
+
+                -- Nova tabela que relaciona Professor com Disciplina
+                CREATE TABLE IF NOT EXISTS Professor_Disciplina (
+                    matricula_professor TEXT NOT NULL,
+                    codigo_disciplina TEXT NOT NULL,
+                    PRIMARY KEY (matricula_professor, codigo_disciplina),
+                    FOREIGN KEY (matricula_professor) REFERENCES Professor(matricula_professor),
+                    FOREIGN KEY (codigo_disciplina) REFERENCES Disciplina(codigo_disciplina)
+                );
+
+                -- Nova tabela que relaciona Disciplina com Turma
+                CREATE TABLE IF NOT EXISTS Disciplina_Turma (
+                    codigo_disciplina TEXT NOT NULL,
+                    codigo_turma TEXT NOT NULL,
+                    PRIMARY KEY (codigo_disciplina, codigo_turma),
+                    FOREIGN KEY (codigo_disciplina) REFERENCES Disciplina(codigo_disciplina),
+                    FOREIGN KEY (codigo_turma) REFERENCES Turma(codigo_turma)
                 );
             ''')
 

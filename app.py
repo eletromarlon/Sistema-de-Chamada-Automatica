@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from server_client_v2.db_operations import DatabaseManager
 
 app = Flask(__name__)
 
@@ -22,6 +23,9 @@ exemplo = [
     ['000016', 'Aluno 17', '06A'],
     ['000017', 'Aluno 18', '01A']
 ]
+
+def db_ops(name: str = 'sca_db'):
+        return DatabaseManager(name)
 
 def header_table():
     header = ["Matricula", "Nome", "Turma"]
