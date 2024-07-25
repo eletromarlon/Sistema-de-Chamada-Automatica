@@ -1,54 +1,62 @@
-from flask import Flask, render_template
+from email.policy import default
+from flask import Flask, jsonify, redirect, render_template, request, url_for
 from server_client_v2.db_operations import DatabaseManager
+
+BANCO = 'sca_db'
+
+db = DatabaseManager(BANCO)
+DISCIPLINAS = db.read('Disciplina')
 
 app = Flask(__name__)
 
-exemplo = [
-    ['000000', 'Aluno 01', '01A'],
-    ['000001', 'Aluno 02', '01A'],
-    ['000002', 'Aluno 03', '01A'],
-    ['000003', 'Aluno 04', '01A'],
-    ['000004', 'Aluno 05', '02A'],
-    ['000005', 'Aluno 06', '01A'],
-    ['000006', 'Aluno 07', '01A'],
-    ['000007', 'Aluno 08', '01A'],
-    ['000008', 'Aluno 09', '04A'],
-    ['000009', 'Aluno 10', '01A'],
-    ['000010', 'Aluno 11', '01B'],
-    ['000011', 'Aluno 12', '01A'],
-    ['000012', 'Aluno 13', '01A'],
-    ['000013', 'Aluno 14', '01A'],
-    ['000014', 'Aluno 15', '03A'],
-    ['000015', 'Aluno 16', '01A'],
-    ['000016', 'Aluno 17', '06A'],
-    ['000017', 'Aluno 18', '01A']
-]
-
-def db_ops(name: str = 'sca_db'):
+def db_ops(name: str = BANCO):
         return DatabaseManager(name)
 
-def header_table():
-    header = ["Matricula", "Nome", "Turma"]
-    return header
+def listar_aulas(banco: str, codigo_disciplina: str):
+    db = db_ops(banco)
+    lista_aulas = db.read('Aula', {f'codigo_disciplina': str(codigo_disciplina)})
+    return lista_aulas
 
-def table(disciplina: str = 'Matematica'):
-    tabela = []
-    for row in range(50):
-        try:
-            tabela.append(exemplo[row])
-        except:
-            tabela.append(['-', '-', '-'])
-    return tabela
+def listar_frequencia(banco: str, id_aula: str):
+    db = db_ops(banco)
+    lista_presentes = db.read('Aula_Aluno', {'id_aula': id_aula})
+    return lista_presentes
+
+def listar_disciplinas(banco: str):
+    db = db_ops(banco)
+    lista_disciplinas = db.read('Disciplina')
+    return lista_disciplinas
 
 @app.route('/')
 def login(name=None):
     return render_template('index.html', person=name)
 
-@app.route('/home')
-def home(name=None):
-    frequencia = table()
-    name = frequencia
-    return render_template('home.html', tabela=name)
+@app.route('/home/', defaults={'cod_disciplina': None, 'id_aula': None, 'limpar':None}, methods=['GET'])
+@app.route('/home/<cod_disciplina>', defaults={'id_aula': None, 'limpar':None}, methods=['GET'])
+@app.route('/home/<cod_disciplina>/<id_aula>', defaults={'limpar':None}, methods=['GET'])
+@app.route('/home/<cod_disciplina>/<id_aula>/<limpar>', methods=['GET'])
+def home(cod_disciplina, id_aula, limpar):
+    # Lista de disciplinas disponíveis
+    disciplinas = DISCIPLINAS
+
+    # Listar aulas se o código da disciplina for fornecido
+    if cod_disciplina:
+        aulas = listar_aulas(banco=BANCO, codigo_disciplina=cod_disciplina)
+    else:
+        aulas = []
+
+    # Listar frequência se o ID da aula for fornecido
+    if id_aula:
+        tabela = listar_frequencia(banco=BANCO, id_aula=id_aula)
+    else:
+        tabela = [('-', '-', '-', '-')]
+    
+    if limpar:
+        return redirect(f"/home/{cod_disciplina}")
+
+    # Renderizar o template com os dados
+    return render_template('home.html', aulas=aulas, tabela=tabela, disciplinas=disciplinas, cod_disciplina_select=cod_disciplina)
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",debug=True)  # Ativa o modo de depuração com recarregamento automático
