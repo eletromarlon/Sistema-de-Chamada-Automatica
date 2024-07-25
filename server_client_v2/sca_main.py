@@ -52,6 +52,7 @@ def sys_start(
         print('Transferência de img_bd concluída')
         return True
     elif type == 2:
+        inicio = time.time()
         saida  = client.sca_shipper(
                                 type=type,
                                 turma_id=turma,
@@ -60,12 +61,13 @@ def sys_start(
                                 server_ip=server_ip,
                                 img_data=bytes(image)
                     )
+        fim = time.time()
         try:
             tempo = time_convert(saida.time)
             SCA_LOG.append([saida.name, tempo])
             print(f'Dia/Mes/Ano {tempo[2]}/{tempo[1]}/{tempo[0]}')
             print(f"Rosto encontrado {saida.name}")
-            display_lcd(f'{saida.id_aluno}-{tempo[2]}/{tempo[1]}/{tempo[0]}@{saida.name}', time=5)
+            display_lcd(f'{saida.id_aluno}-{tempo[2]}/{tempo[1]}/{tempo[0]}@{saida.name} - ({fim - inicio})', time=3)
         except:
             ('Erro na finalização dos dados.')
     return None
@@ -84,7 +86,10 @@ turma = '01A'
 disciplina = 'BDA01' 
 
 # baixa as imagens da turma
+inicio = time.time()
 sys_start(type=1, turma=turma, server_ip=server_ip, image='')
+fim = time.time()
+display_lcd(f'Tempo de Download {fim - inicio}')
 
 # Executa o sistema infinitamente
 while KeyboardInterrupt:
@@ -92,14 +97,19 @@ while KeyboardInterrupt:
     if sys_start(type=0, server_ip=server_ip, image=''):
         # Captura da imagem em formado ndarray
         image = take_photo()
-        sys_start(
-            type=2,
-            turma=turma,
-            server_ip=server_ip,
-            disciplina=disciplina,
-            image=image
-        )
-        
+        try:
+            sys_start(
+                type=2,
+                turma=turma,
+                server_ip=server_ip,
+                disciplina=disciplina,
+                image=image
+            )
+        except:
+            display_lcd(f'Tente ficar @parado')
+            display_lcd(f'Apenas um de @cada vez')
+            display_lcd(f'Tente ficar @parado')
+            display_lcd(f'Apenas um de @cada vez')
     
 '''   
     #Alterar a função de tratamento de shape da imagem pois pode ser enviado

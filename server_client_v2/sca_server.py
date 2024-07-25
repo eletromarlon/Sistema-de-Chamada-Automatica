@@ -199,7 +199,7 @@ class EnvioDeMensagensServicer(grpc_image2_pb2_grpc.EnvioDeMensagensServicer):
         else:
         
 
-            db = self.db_ops('teste.db')
+            db = self.db_ops('sca_db')
 
             print(request.shape)
 
