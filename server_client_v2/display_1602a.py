@@ -55,7 +55,12 @@ def display_lcd(
     
     back_light(True)
     
-    if (word.find('@') != -1):
+    try:
+        find_arroba = word.find('@')
+    except:
+        find_arroba = -1
+    
+    if (find_arroba != -1):
         # Disable GPIO warnings
         GPIO.setwarnings(False)
         # Set GPIO pin mode. RPi pins described in this example use BCM.
