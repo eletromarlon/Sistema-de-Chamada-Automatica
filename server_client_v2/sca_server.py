@@ -233,7 +233,7 @@ class EnvioDeMensagensServicer(grpc_image2_pb2_grpc.EnvioDeMensagensServicer):
             response.id_aluno = matricula
             response.time = request.time
             response.image = request.image
-            response.name = (db.read('Aluno', {'matricula_aluno': '493408'}))[0][1]
+            response.name = (db.read('Aluno', {'matricula_aluno': matricula}))[0][1]
             response.num_faltas = 0
             response.repositorio = b''
 

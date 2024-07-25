@@ -4,7 +4,7 @@ def run_flask():
     os.system('python app.py')
 
 def run_grpc():
-    os.system('python server-client_v2/sca_server.py')
+    os.system('python server_client_v2/sca_server.py')
 
 if __name__ == '__main__':
     grpc_thread = threading.Thread(target=run_grpc)

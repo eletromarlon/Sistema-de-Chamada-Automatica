@@ -65,9 +65,7 @@ def sys_start(
             SCA_LOG.append([saida.name, tempo])
             print(f'Dia/Mes/Ano {tempo[2]}/{tempo[1]}/{tempo[0]}')
             print(f"Rosto encontrado {saida.name}")
-            display_lcd(f'{saida.id_aluno}-{tempo[2]}/{tempo[1]}/{tempo[0]}@{saida.name}')
-            # Isso pode ser excluído. Apenas para analisar as saídas.
-            time.sleep(1)
+            display_lcd(f'{saida.id_aluno}-{tempo[2]}/{tempo[1]}/{tempo[0]}@{saida.name}', time=5)
         except:
             ('Erro na finalização dos dados.')
     return None
