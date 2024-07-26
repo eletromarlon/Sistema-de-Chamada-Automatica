@@ -110,6 +110,8 @@ while KeyboardInterrupt:
             display_lcd(f'Apenas um de @cada vez')
             display_lcd(f'Tente ficar @parado')
             display_lcd(f'Apenas um de @cada vez')
+    else:
+        print(f"Erro na REDE")
     
 '''   
     #Alterar a função de tratamento de shape da imagem pois pode ser enviado
