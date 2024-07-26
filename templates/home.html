@@ -35,7 +35,7 @@
             </button>
             <ul class="dropdown-menu">
               {% for aula in aulas %}
-              <li><a class="dropdown-item" href="{{ cod_disciplina_select }}/{{ aula[0] }}">{{ aula[0] }}</a></li>
+              <li><a class="dropdown-item" href="{{ cod_disciplina_select }}/{{ aula[0] }}">{{ aula[0] }} - {{ aula[2] }}</a></li>
               {% endfor %}
             </ul>
           </div>

@@ -20,7 +20,7 @@ class TimeUtils:
         return local_time.strftime('%d/%m/%Y %H:%M:%S')
 
     @staticmethod
-    def convert_timestamp_to_brazilian_format(timestamp: float, timezone: str) -> str:
+    def convert_timestamp_to_brazilian_format(timestamp: float, timezone: str = 'America/Sao_Paulo') -> str:
         """
         Converte um timestamp para o formato brasileiro de data e hora no fuso horário especificado.
         
@@ -36,7 +36,7 @@ class TimeUtils:
         return local_time.strftime('%d/%m/%Y %H:%M:%S')
 
     @staticmethod
-    def get_time_components(timestamp: float, timezone: str) -> dict:
+    def get_time_components(timestamp: float, timezone: str = 'America/Sao_Paulo') -> dict:
         """
         Converte um timestamp para um dicionário com os componentes de data e hora no formato brasileiro.
         

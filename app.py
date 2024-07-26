@@ -1,6 +1,7 @@
 from email.policy import default
 from flask import Flask, jsonify, redirect, render_template, request, url_for
 from server_client_v2.db_operations import DatabaseManager
+from server_client_v2.time_utils import TimeUtils
 
 BANCO = 'sca_db'
 
@@ -38,12 +39,19 @@ def login(name=None):
 def home(cod_disciplina, id_aula, limpar):
     # Lista de disciplinas disponíveis
     disciplinas = DISCIPLINAS
+    time = TimeUtils()
 
     # Listar aulas se o código da disciplina for fornecido
     if cod_disciplina:
         aulas = listar_aulas(banco=BANCO, codigo_disciplina=cod_disciplina)
+        for aula, i in aulas, range(len(aulas)):
+            temp = time.get_time_components(timestamp=aula[2])
+            saida = ((str(temp['dia']) + str(temp['mes']) + str(temp['ano'])), 1)
+            aula[i] = aula + saida
     else:
         aulas = []
+
+    print(aulas)
 
     # Listar frequência se o ID da aula for fornecido
     if id_aula:
