@@ -39,15 +39,18 @@ def login(name=None):
 def home(cod_disciplina, id_aula, limpar):
     # Lista de disciplinas disponíveis
     disciplinas = DISCIPLINAS
-    time = TimeUtils()
+    tempo = TimeUtils()
+    button_disciplina = 'Disciplina'
+    button_aula = 'Aula'
 
     # Listar aulas se o código da disciplina for fornecido
     if cod_disciplina:
         aulas = listar_aulas(banco=BANCO, codigo_disciplina=cod_disciplina)
-        for aula, i in aulas, range(len(aulas)):
-            temp = time.get_time_components(timestamp=aula[2])
-            saida = ((str(temp['dia']) + str(temp['mes']) + str(temp['ano'])), 1)
-            aula[i] = aula + saida
+        for aula, i in zip(aulas, range(len(aulas))):
+            temp = tempo.get_time_components(timestamp=aula[2])
+            lista = list(aula)
+            lista.append(str(temp['dia']) + '/' + str(temp['mes']) + '/' + str(temp['ano']))
+            aulas[i] = tuple(lista)
     else:
         aulas = []
 
@@ -56,14 +59,26 @@ def home(cod_disciplina, id_aula, limpar):
     # Listar frequência se o ID da aula for fornecido
     if id_aula:
         tabela = listar_frequencia(banco=BANCO, id_aula=id_aula)
+        button_disciplina = 'Limpe a tela'
+        button_aula = 'Limpe a tela'
+        disciplinas = [('-','-','-','-','-')]
+        aulas = [('-','-','-','-','-')]
     else:
         tabela = [('-', '-', '-', '-')]
     
     if limpar:
-        return redirect(f"/home/{cod_disciplina}")
+        return redirect(f"/home/")
 
-    # Renderizar o template com os dados
-    return render_template('home.html', aulas=aulas, tabela=tabela, disciplinas=disciplinas, cod_disciplina_select=cod_disciplina)
+    # Renderizar o template com os dados setados
+    return render_template(
+            'home.html',
+            button_disciplina=button_disciplina, 
+            button_aula=button_aula, 
+            aulas=aulas, 
+            tabela=tabela, 
+            disciplinas=disciplinas, 
+            cod_disciplina_select=cod_disciplina
+    )
 
 
 if __name__ == '__main__':

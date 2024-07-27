@@ -18,7 +18,7 @@
         <div class="col">
           <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Disciplina
+              {{button_disciplina}}
             </button>
             <ul class="dropdown-menu">
               {% for disciplina in disciplinas %}
@@ -31,11 +31,11 @@
         <div class="col">
           <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Aula
+              {{button_aula}}
             </button>
             <ul class="dropdown-menu">
               {% for aula in aulas %}
-              <li><a class="dropdown-item" href="{{ cod_disciplina_select }}/{{ aula[0] }}">{{ aula[0] }} - {{ aula[2] }}</a></li>
+              <li><a class="dropdown-item" href="{{ cod_disciplina_select }}/{{ aula[0] }}">{{ aula[0] }} - {{ aula[3] }}</a></li>
               {% endfor %}
             </ul>
           </div>
@@ -44,7 +44,7 @@
         <div class="col">
           <div class="dropdown">
             <button type="button" class="btn btn-outline-danger">
-              <a class="link-opacity-100 link-danger" href="/home">Limpar</a>
+              <a class="link-opacity-100 link-danger" href="/home">Limpar Tela</a>
             </button>
           </div>
         </div>
