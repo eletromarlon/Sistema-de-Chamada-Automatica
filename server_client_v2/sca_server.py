@@ -201,18 +201,12 @@ class EnvioDeMensagensServicer(grpc_image2_pb2_grpc.EnvioDeMensagensServicer):
 
             db = self.db_ops('sca_db')
 
-            print(request.shape)
-
-            #shape = self.reshape_adj(request.shape)
-
-            #image = self.reshape_img(shape, request.image)
-
             image = np.frombuffer(request.image, dtype=np.uint8).reshape(self.parse_string_to_tuple(request.shape))
 
             # Salvando a imagem recebida. Essa linha poderá ser apagada caso se possa utilizar o ndarray na lib deepface
             cv2.imwrite('image.jpg', image)
         
-        # Realizando o reconhecimento a partir da imagem salva na linha anterior
+            # Realizando o reconhecimento a partir da imagem salva na linha anterior
             result = face_compare('image.jpg', self.sys_path() + '/img_db/' + request.id_turma, 3)
 
             try:

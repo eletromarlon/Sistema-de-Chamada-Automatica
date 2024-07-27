@@ -5,8 +5,15 @@ from sca_discover_client import run_client
 from cam_auto_take import take_photo
 from get_img_db import get_img_db
 from display_1602a import display_lcd
+from sca_recognizer import face_compare
 
-SCA_LOG = []
+SCA_LOG = [] #
+
+turma = '01A'
+disciplina = 'DC' 
+
+def sys_path(self):
+        return os.getcwd()
 
 def time_convert(tempo):
     try:
@@ -80,16 +87,15 @@ def get_ip():
 
 
 # Captura o endereço do servidor, só será usado durante o início do sistema. Enquanto não se encontre o endereço o laço não terminará
-
 server_ip = get_ip()    
-turma = '01A'
-disciplina = 'BDA01' 
 
 # baixa as imagens da turma
 inicio = time.time()
 sys_start(type=1, turma=turma, server_ip=server_ip, image='')
 fim = time.time()
 display_lcd(f'Tempo de Download {fim - inicio}')
+
+
 
 # Executa o sistema infinitamente
 while KeyboardInterrupt:
@@ -111,34 +117,4 @@ while KeyboardInterrupt:
             display_lcd(f'Tente ficar @parado')
             display_lcd(f'Apenas um de @cada vez')
     else:
-        print(f"Erro na REDE")
-    
-'''   
-    #Alterar a função de tratamento de shape da imagem pois pode ser enviado
-    
-
-    # Enviando dados ao servidor. Por enquanto apenas passando esses parâmetros
-    # Utilizar type para determinar o tamanho do reshape da imagem
-    # Imagine tamanho de imagem "padrões" e determine valores para o type cujos quais possam transportar essa informação junto a outras
-    # No server pode ter um vetor de tamanhos em string e o inteiro vindo em type escolhe o tamanho. O reshape deve usar try except
-    saida  = client.sca_shipper(
-        type=1,
-        turma_id='01A',
-        disciplina_id='BD01',
-        img_shape='640x480',
-        server_ip=server_ip[0],
-        img_data=bytes(imagem)
-    )
-    
-    #print(f'Erro\nDados não enviados ou Rosto não reconhecido\nMensagem de erro\n{saida}')
-    
-    try:
-        tempo = time_convert(saida.time)
-        SCA_LOG.append([saida.name, tempo])
-        print(f'Dia/Mes/Ano {tempo[2]}/{tempo[1]}/{tempo[0]}')
-        print(f"Rosto encontrado {saida.name}")
-        # Isso pode ser excluído. Apenas para analisar as saídas.
-        time.sleep(2)
-    except:
-        ('Erro na finalização dos dados.')
-'''
+        saida = face_compare('image.jpg', sys_path() + '/img_db/' + turma, 3)
