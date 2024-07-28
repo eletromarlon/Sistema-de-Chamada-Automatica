@@ -13,7 +13,7 @@ SCA_LOG = [] #
 turma = '01A'
 disciplina = 'DC' 
 
-def sys_path(self):
+def sys_path():
         return os.getcwd()
 
 def time_convert(tempo):
