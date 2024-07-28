@@ -1,5 +1,6 @@
 import base64, cv2,time, os, numpy as np
 import client_grpc_JSON as client
+import threading
 
 from sca_discover_client import run_client
 from cam_auto_take import take_photo
@@ -118,3 +119,4 @@ while KeyboardInterrupt:
             display_lcd(f'Apenas um de @cada vez')
     else:
         saida = face_compare('image.jpg', sys_path() + '/img_db/' + turma, 3)
+        print(saida)

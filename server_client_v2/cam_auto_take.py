@@ -46,17 +46,17 @@ def take_photo(
             if len(faces) > 0:
                 # Força o aguardo para que o rosto esteja mais estático evitando sombras e/ou distorções. Pode ser adicionado um sleep e mudar a mensagem
                 if teste < WAIT_TIME:
-                    print("Aguarde...                              ", end='\r')
+                    print("Aguarde...                              ")
                     display_lcd("Aguarde...@Fique parado!", time=1)
                     teste += 1
                     continue
 
-                print("Rosto detectado!Registrando", end='\r')
+                print("Rosto detectado!Registrando")
                 display_lcd("Rosto detectado!Reconhecendo...", time=1)
                 # Termina o loop para evitar que tire mais de uma foto por detecção de rosto
                 break
             else:
-                print("Sem rostos para registrar!", end='\r')
+                print("Sem rostos para registrar!")
                 display_lcd(word="Sem rostos @a registrar.", time=1)
 
             # Libera a captura de vídeo e fecha a janela
@@ -95,18 +95,18 @@ def take_photo(
             if len(faces) > 0:
                 # Força o aguardo para que o rosto esteja mais estático. Pode ser adicionado um sleep e mudar a mensagem
                 if teste < WAIT_TIME:
-                    print("Aguarde...                                        ", end='\r')
+                    print("Aguarde...                                        ")
                     display_lcd("Aguarde...@Fique parado!", time=1)
                     teste += 1
                     continue
 
-                print("Rosto detectado! Imagem registrada.", end='\r')
+                print("Rosto detectado! Imagem registrada.")
                 display_lcd("Pronto! Já estou@Te reconhecendo", time=1)
                 
                 # Termina o loop para evitar que tire mais de uma foto por detecção de rosto
                 break
             else:
-                print("Sem rostos para registrar!", end='\r')
+                print("Sem rostos para registrar!")
                 display_lcd("Sem rostos@a registrar.")
             
 

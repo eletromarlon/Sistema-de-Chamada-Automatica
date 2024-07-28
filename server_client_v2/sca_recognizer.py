@@ -1,6 +1,9 @@
 import cv2, os 
 import numpy as np
-from deepface import DeepFace
+try:
+    from deepface import DeepFace
+except:
+    from _deepface import DeepFace
 
 # Melhores modelos para detecção -> alinhamento -> extração -> reconhecimento
 par_detector_model = [['mtcnn', 'Facenet'],['mtcnn', 'ArcFace'], ['yolov8', 'Facenet'], ['yolov8', 'ArcFace']]

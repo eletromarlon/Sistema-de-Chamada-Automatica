@@ -1,31 +1,33 @@
+import datetime
 from email.policy import default
-from flask import Flask, jsonify, redirect, render_template, request, url_for
+from flask import Flask, flash, jsonify, redirect, render_template, render_template_string, request, url_for
 from server_client_v2.db_operations import DatabaseManager
 from server_client_v2.time_utils import TimeUtils
+from dateutil import parser
 
 BANCO = 'sca_db'
-
-db = DatabaseManager(BANCO)
-DISCIPLINAS = db.read('Disciplina')
 
 app = Flask(__name__)
 
 def db_ops(name: str = BANCO):
-        return DatabaseManager(name)
+    return DatabaseManager(name)
 
 def listar_aulas(banco: str, codigo_disciplina: str):
     db = db_ops(banco)
     lista_aulas = db.read('Aula', {f'codigo_disciplina': str(codigo_disciplina)})
+    db.close()
     return lista_aulas
 
 def listar_frequencia(banco: str, id_aula: str):
     db = db_ops(banco)
     lista_presentes = db.read('Aula_Aluno', {'id_aula': id_aula})
+    db.close()
     return lista_presentes
 
 def listar_disciplinas(banco: str):
     db = db_ops(banco)
     lista_disciplinas = db.read('Disciplina')
+    db.close()
     return lista_disciplinas
 
 @app.route('/')
@@ -38,7 +40,8 @@ def login(name=None):
 @app.route('/home/<cod_disciplina>/<id_aula>/<limpar>', methods=['GET'])
 def home(cod_disciplina, id_aula, limpar):
     # Lista de disciplinas disponíveis
-    disciplinas = DISCIPLINAS
+    db = db_ops(BANCO)
+    disciplinas = db.read('Disciplina')
     tempo = TimeUtils()
     button_disciplina = 'Disciplina'
     button_aula = 'Aula'
@@ -53,8 +56,6 @@ def home(cod_disciplina, id_aula, limpar):
             aulas[i] = tuple(lista)
     else:
         aulas = []
-
-    print(aulas)
 
     # Listar frequência se o ID da aula for fornecido
     if id_aula:
@@ -79,6 +80,41 @@ def home(cod_disciplina, id_aula, limpar):
             disciplinas=disciplinas, 
             cod_disciplina_select=cod_disciplina
     )
+
+
+app.secret_key = 'your_secret_key'  # Necessário para usar flash messages
+
+@app.route('/cadastrar_aula', methods=['GET', 'POST'])
+def cadastrar_aula():
+    db = db_ops(BANCO)
+    if request.method == 'POST':
+        id_aula = request.form['id_aula']
+        codigo_disciplina = request.form['codigo_disciplina']
+        data_aula_str = request.form['data_aula']
+
+        try:
+            # Convertendo a data para timestamp usando dateutil.parser
+            data_aula = parser.parse(data_aula_str)
+            timestamp_aula = int(data_aula.timestamp())
+
+            # Dados para inserção no banco
+            data = {
+                'id_aula': id_aula,
+                'codigo_disciplina': codigo_disciplina,
+                'data_aula': timestamp_aula
+            }
+
+            print(f'data comtem os dados {data}')
+
+            # Inserindo no banco
+            db.create('Aula', data)
+            flash('Aula cadastrada com sucesso!', 'success')
+            db.close()
+            return redirect(url_for('cadastrar_aula'))
+        except Exception as e:
+            flash(f'Erro ao cadastrar aula: {e}', 'danger')
+    
+    return render_template('cadastrar_aula.html')
 
 
 if __name__ == '__main__':
