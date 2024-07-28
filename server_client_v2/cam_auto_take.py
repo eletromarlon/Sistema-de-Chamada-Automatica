@@ -4,7 +4,7 @@ from picamera2 import Picamera2
 from time import sleep
 from display_1602a import display_lcd
 
-WAIT_TIME = 5
+WAIT_TIME = 3
 
 def take_photo(
     method: str = 'picamera'
