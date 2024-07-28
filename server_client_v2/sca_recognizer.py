@@ -3,7 +3,7 @@ import numpy as np
 try:
     from deepface import DeepFace
 except:
-    from _deepface import DeepFace
+    import _deepface.DeepFace
 
 # Melhores modelos para detecção -> alinhamento -> extração -> reconhecimento
 par_detector_model = [['mtcnn', 'Facenet'],['mtcnn', 'ArcFace'], ['yolov8', 'Facenet'], ['yolov8', 'ArcFace']]

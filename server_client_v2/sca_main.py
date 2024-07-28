@@ -97,7 +97,6 @@ fim = time.time()
 display_lcd(f'Tempo de Download {fim - inicio}')
 
 
-
 # Executa o sistema infinitamente
 while KeyboardInterrupt:
     
