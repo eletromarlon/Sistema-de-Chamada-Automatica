@@ -117,6 +117,9 @@ while KeyboardInterrupt:
             display_lcd(f'Tente ficar @parado')
             display_lcd(f'Apenas um de @cada vez')
     else:
+
+        cv2.imwrite(filename='image.jpg', img=image)
+
         saida = face_compare('image.jpg', sys_path() + '/img_db/' + turma, 3)
         try:
             tempo = time_convert(saida.time)
