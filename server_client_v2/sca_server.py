@@ -132,7 +132,7 @@ class EnvioDeMensagensServicer(grpc_image2_pb2_grpc.EnvioDeMensagensServicer):
                     os.system(f"rm {matricula + '.zip'}")
                     return arq, True
                 else:
-                    os.system(f'rm {matricula + '.zip'}')
+                    os.system(f"rm {matricula + '.zip'}")
                     return arq, False
         return b'vazio', True
         
