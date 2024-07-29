@@ -129,7 +129,7 @@ class EnvioDeMensagensServicer(grpc_image2_pb2_grpc.EnvioDeMensagensServicer):
                 arq = file.read()
                 print(f'Numero de alunos na LISTA_ALUNOS {len(LISTA_ALUNOS)}')
                 if not LISTA_ALUNOS:
-                    os.system(f'rm {matricula + '.zip'}')
+                    os.system(f"rm {matricula + '.zip'}")
                     return arq, True
                 else:
                     os.system(f'rm {matricula + '.zip'}')
