@@ -99,9 +99,9 @@ display_lcd(f'Tempo de Download {fim - inicio}')
 # Executa o sistema infinitamente
 while KeyboardInterrupt:
     
+    image = take_photo()
     if sys_start(type=0, server_ip=server_ip, image=''):
         # Captura da imagem em formado ndarray
-        image = take_photo()
         try:
             sys_start(
                 type=2,
