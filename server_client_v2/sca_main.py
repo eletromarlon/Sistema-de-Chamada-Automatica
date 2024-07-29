@@ -121,10 +121,10 @@ while KeyboardInterrupt:
 
         saida = face_compare('image.jpg', sys_path() + '/img_db/' + turma, 1)
         try:
-            tempo = time_convert(saida.time)
-            SCA_LOG.append([saida.name, tempo])
-            print(f'Dia/Mes/Ano {tempo[2]}/{tempo[1]}/{tempo[0]}')
-            print(f"Rosto encontrado {saida.name}")
-            display_lcd(f'{saida.id_aluno}-{tempo[2]}/{tempo[1]}/{tempo[0]}@{saida.name} - ({fim - inicio})', time=3)
+            #tempo = time_convert(saida.time)
+            #SCA_LOG.append([saida.name, tempo])
+            #print(f'Dia/Mes/Ano {tempo[2]}/{tempo[1]}/{tempo[0]}')
+            #print(f"Rosto encontrado {saida.name}")
+            display_lcd(f'Nome {saida[0]}', time=3)
         except:
             ('Erro na finalização dos dados.')
