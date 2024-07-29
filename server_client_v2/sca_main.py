@@ -1,6 +1,5 @@
 import base64, cv2,time, os, numpy as np
 import client_grpc_JSON as client
-import threading
 
 from sca_discover_client import run_client
 from cam_auto_take import take_photo
@@ -120,7 +119,7 @@ while KeyboardInterrupt:
 
         cv2.imwrite(filename='image.jpg', img=image)
 
-        saida = face_compare('image.jpg', sys_path() + '/img_db/' + turma, 3)
+        saida = face_compare('image.jpg', sys_path() + '/img_db/' + turma, 1)
         try:
             tempo = time_convert(saida.time)
             SCA_LOG.append([saida.name, tempo])
