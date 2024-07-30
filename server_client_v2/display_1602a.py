@@ -1,7 +1,7 @@
 from xmlrpc.client import Boolean
-import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO #type: ignore
 from time import sleep
-import lcd1602gpio
+import lcd1602gpio #type: ignore
 import threading
 
 
