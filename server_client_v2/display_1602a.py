@@ -2,39 +2,20 @@ from xmlrpc.client import Boolean
 import RPi.GPIO as GPIO
 from time import sleep
 import lcd1602gpio
+import threading
 
 
-
-'''
-pin = 24
-iterations = 10
-interval = .25
-
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
-GPIO.setup(pin, GPIO.OUT)
-
-for x in range(1, iterations+1):
-    print(f"Loop {x}: LED on")
-    GPIO.output(pin, GPIO.HIGH)
-    sleep(interval)
-    
-    print(f"Loop {x}: LED off")
-    GPIO.output(pin, GPIO.LOW)
-    sleep(interval)
-    
-
-'''
 def back_light(button: Boolean):
     GPIO.setmode(GPIO.BCM)
-    
+    # Disable GPIO warnings
+    GPIO.setwarnings(False)
     GPIO.setup(12, GPIO.OUT, initial=GPIO.HIGH)
     if button:
         GPIO.output(12, GPIO.HIGH)
     else:
         GPIO.output(12, GPIO.OUT)
 
-def display_lcd(
+def display_lcd_thread(
     word: str = '--------------------------------',
     row: int = 0 | 1,
     time: int = 2
@@ -129,11 +110,34 @@ def display_lcd(
                 db4=18)
 
         # write texts to Line 0 of the LCD.
-        lcd.write_line(word, 0)
+        lcd.write_line(word, row)
         sleep(time)
         # Do GPIO cleanup manually before exiting.
         back_light(button=False)
         lcd.clear_lcd()
         GPIO.cleanup()
     
+def display_lcd(
+    word: str = '--------------------------------',
+    row: int = 0 | 1,
+    time: int = 2
+):
+    '''
+    Exibir mensagens em um display de 16 segmentos com 2 linhas
+    Para quebrar linha use o caracter '@'
+    Se mais de 32 caracteres forem repassados, a partir do 33º não será exibido
+    
+    Args:
+        word:(string com tamanho maximo de 16 caracteres) Recebe uma string que será exibida no display
+        row: (0 | 1) indica a linha em que a mensagem será exibida
+    
+    Exemplo: display_lcd(word="Marlon @Duarte") --> Marlon
+                                                    Duarte
+                                                    
+    '''
+    show_word = threading.Thread(target=display_lcd_thread(word, row, time))
+    show_word.start()
+    time.sleep(time)
+    show_word.join()
+
 display_lcd("SCA - UFC@Marlon Duarte")

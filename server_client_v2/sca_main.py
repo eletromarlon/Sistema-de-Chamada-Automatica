@@ -119,7 +119,7 @@ while KeyboardInterrupt:
 
         cv2.imwrite(filename='image.jpg', img=image)
 
-        saida = face_compare('image.jpg', sys_path() + '/img_db/' + turma, 1)
+        saida = face_compare('image.jpg', sys_path() + '/img_db/' + turma, 0)
         try:
             #tempo = time_convert(saida.time)
             #SCA_LOG.append([saida.name, tempo])
