@@ -137,7 +137,7 @@ def display_lcd(
     '''
     show_word = threading.Thread(target=display_lcd_thread(word, row, time))
     show_word.start()
-    time.sleep(time)
+    sleep(time)
     show_word.join()
 
 display_lcd("SCA - UFC@Marlon Duarte")
