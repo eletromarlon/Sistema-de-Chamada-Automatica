@@ -67,7 +67,7 @@ class EnvioDeMensagensServicer(grpc_image2_pb2_grpc.EnvioDeMensagensServicer):
                 print(f"Aula {aula}")
                 print(f"Saida de status_frequencia {self.status_frequencia(banco, matricula, aula)}")
                 if not self.status_frequencia(banco, matricula, aula): # Verificar se já há registro desse aluno na frequencia para hoje
-                    db.create('Frequencia', {'matricula_aluno': matricula, # Gera a frequencia para aquele aluno
+                    db.create('Aula_Aluno', {'matricula_aluno': matricula, # Gera a frequencia para aquele aluno
                                             'codigo_aula': aula,
                                             'presente': '1',
                                             'data': data})

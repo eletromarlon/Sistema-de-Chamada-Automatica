@@ -56,9 +56,9 @@ class DatabaseManager:
                 );
 
                 CREATE TABLE IF NOT EXISTS Aula (
-                    id_aula INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id_aula TEXT PRIMARY KEY,
                     codigo_disciplina TEXT NOT NULL,
-                    data_aula DATE NOT NULL,
+                    data_aula TEXT NOT NULL,
                     FOREIGN KEY (codigo_disciplina) REFERENCES Disciplina(codigo_disciplina)
                 );
 
