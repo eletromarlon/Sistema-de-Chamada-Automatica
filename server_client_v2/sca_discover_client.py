@@ -30,8 +30,10 @@ def run_client():
     try:
         data, addr = sock.recvfrom(1024)
         print(f"Resposta recebida: {(data).decode('utf-8')} de {addr}")
+        time.sleep(0.05)
         display.stop_display()
         display.start_display(f"Resposta: {(data).decode('utf-8')} de {addr}")
+        time.sleep(1)
         return [addr[0], data]
     except socket.timeout:
         return None
