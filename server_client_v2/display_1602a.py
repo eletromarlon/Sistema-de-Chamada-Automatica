@@ -1,11 +1,9 @@
-from xmlrpc.client import Boolean
 import RPi.GPIO as GPIO #type: ignore
 from time import sleep
 import lcd1602gpio #type: ignore
-import threading
 
 
-def back_light(button: Boolean):
+def back_light(button: bool):
     GPIO.setmode(GPIO.BCM)
     # Disable GPIO warnings
     GPIO.setwarnings(False)
@@ -15,7 +13,7 @@ def back_light(button: Boolean):
     else:
         GPIO.output(12, GPIO.OUT)
 
-def display_lcd_thread(
+def display_lcd(
     word: str = '--------------------------------',
     row: int = 0 | 1,
     time: int = 2
@@ -116,27 +114,5 @@ def display_lcd_thread(
         back_light(button=False)
         lcd.clear_lcd()
         GPIO.cleanup()
-    
-def display_lcd(
-    word: str = '--------------------------------',
-    row: int = 0 | 1,
-    time: int = 2
-):
-    '''
-    Exibir mensagens em um display de 16 segmentos com 2 linhas
-    Para quebrar linha use o caracter '@'
-    Se mais de 32 caracteres forem repassados, a partir do 33º não será exibido
-    
-    Args:
-        word:(string com tamanho maximo de 16 caracteres) Recebe uma string que será exibida no display
-        row: (0 | 1) indica a linha em que a mensagem será exibida
-    
-    Exemplo: display_lcd(word="Marlon @Duarte") --> Marlon
-                                                    Duarte
-                                                    
-    '''
-    show_word = threading.Thread(target=display_lcd_thread(word, row, time))
-    show_word.start()
-    show_word.join()
 
 display_lcd("SCA - UFC@Marlon Duarte")

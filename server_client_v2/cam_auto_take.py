@@ -1,10 +1,13 @@
+from copyreg import dispatch_table
 import cv2, os
 import cv2.data
 from picamera2 import Picamera2
 from time import sleep
-from display_1602a import display_lcd
+from display_1602a import LCDTask
 
 WAIT_TIME = 3
+
+display = LCDTask()
 
 def take_photo(
     method: str = 'picamera'
@@ -47,17 +50,20 @@ def take_photo(
                 # Força o aguardo para que o rosto esteja mais estático evitando sombras e/ou distorções. Pode ser adicionado um sleep e mudar a mensagem
                 if teste < WAIT_TIME:
                     print("Aguarde...                              ")
-                    display_lcd("Aguarde...@Fique parado!", time=1)
+                    display.stop_display()
+                    display.start_display("Aguarde...@Fique parado!")
                     teste += 1
                     continue
 
                 print("Rosto detectado!Registrando")
-                display_lcd("Rosto detectado!Reconhecendo...", time=1)
+                display.stop_display()
+                display.start_display("Rosto detectado!Reconhecendo...")
                 # Termina o loop para evitar que tire mais de uma foto por detecção de rosto
                 break
             else:
                 print("Sem rostos para registrar!")
-                display_lcd(word="Sem rostos @a registrar.", time=1)
+                display.stop_display()
+                display.start_display(word="Sem rostos @a registrar.")
 
             # Libera a captura de vídeo e fecha a janela
             cap.release()
@@ -96,18 +102,21 @@ def take_photo(
                 # Força o aguardo para que o rosto esteja mais estático. Pode ser adicionado um sleep e mudar a mensagem
                 if teste < WAIT_TIME:
                     print("Aguarde...                                        ")
-                    display_lcd("Aguarde...@Fique parado!", time=1)
+                    display.stop_display()
+                    display.start_display("Aguarde...@Fique parado!")
                     teste += 1
                     continue
 
                 print("Rosto detectado! Imagem registrada.")
-                display_lcd("Pronto! Já estou@Te reconhecendo", time=1)
+                display.stop_display()
+                display.start_display("Pronto! Já estou@Te reconhecendo", time=1)
                 
                 # Termina o loop para evitar que tire mais de uma foto por detecção de rosto
                 break
             else:
                 print("Sem rostos para registrar!")
-                display_lcd("Sem rostos@a registrar.")
+                display.stop_display()
+                display.start_display("Sem rostos@a registrar.")
             
 
         # Libera a captura de vídeo e o dispositivo modulo de camera

@@ -4,13 +4,15 @@ import client_grpc_JSON as client
 from sca_discover_client import run_client
 from cam_auto_take import take_photo
 from get_img_db import get_img_db
-from display_1602a import display_lcd
+from display_1602a import LCDTask
 from sca_recognizer import face_compare
 
 SCA_LOG = [] #
 
 turma = '01A'
 disciplina = 'DC' 
+
+display = LCDTask()
 
 def sys_path():
         return os.getcwd()
@@ -54,7 +56,8 @@ def sys_start(
         return True
     elif type == 1:   
         print(f'Baixando o banco de imagens da turma {turma}')
-        display_lcd(f"Baixando img da turma {turma}")
+        display.stop_display()
+        display.start_display(f"Baixando img da turma {turma}")
         get_img_db(server_ip=server_ip, id_turma=turma)
         print('Transferência de img_bd concluída')
         return True
@@ -74,7 +77,8 @@ def sys_start(
             SCA_LOG.append([saida.name, tempo])
             print(f'Dia/Mes/Ano {tempo[2]}/{tempo[1]}/{tempo[0]}')
             print(f"Rosto encontrado {saida.name}")
-            display_lcd(f'{saida.id_aluno}-{tempo[2]}/{tempo[1]}/{tempo[0]}@{saida.name} - ({fim - inicio})', time=3)
+            display.stop_display()
+            display.start_display(f'{saida.id_aluno}-{tempo[2]}/{tempo[1]}/{tempo[0]}@{saida.name} - ({fim - inicio})', time=3)
         except:
             ('Erro na finalização dos dados.')
     return None
@@ -93,7 +97,8 @@ server_ip = get_ip()
 inicio = time.time()
 sys_start(type=1, turma=turma, server_ip=server_ip, image='')
 fim = time.time()
-display_lcd(f'Tempo de Download {fim - inicio}')
+display.stop_display()
+display.start_display(f'Tempo de Download {fim - inicio}')
 
 
 # Executa o sistema infinitamente
@@ -111,10 +116,10 @@ while KeyboardInterrupt:
                 image=image
             )
         except:
-            display_lcd(f'Tente ficar @parado')
-            display_lcd(f'Apenas um de @cada vez')
-            display_lcd(f'Tente ficar @parado')
-            display_lcd(f'Apenas um de @cada vez')
+            display.stop_display()
+            display.start_display(f'Rosto desconhecido ou')
+            display.stop_display()
+            display.start_display(f'Tente ficar @parado')
     else:
 
         cv2.imwrite(filename='image.jpg', img=image)
@@ -125,6 +130,7 @@ while KeyboardInterrupt:
             #SCA_LOG.append([saida.name, tempo])
             #print(f'Dia/Mes/Ano {tempo[2]}/{tempo[1]}/{tempo[0]}')
             #print(f"Rosto encontrado {saida.name}")
-            display_lcd(f'Nome {saida[0]}', time=3)
+            display.stop_display()
+            display.start_display(f'Nome {saida[0]}', time=3)
         except:
             ('Erro na finalização dos dados.')

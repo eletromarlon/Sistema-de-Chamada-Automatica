@@ -1,6 +1,8 @@
 import dis
 import socket, time, os
-from display_1602a import display_lcd
+from display_1602a import LCDTask
+
+display = LCDTask()
 
 MCAST_GRP = '224.1.1.1'
 MCAST_PORT = 5007
@@ -15,18 +17,21 @@ def run_client():
 
     # Enviar requisição multicast
     print("Enviando requisição multicast...")
-    display_lcd("Enviando req@multicast...")
+    display.stop_display()
+    display.start_display("Enviando req@multicast...")
     
     sock.sendto(CLIENT_MSG, (MCAST_GRP, MCAST_PORT))
 
     # Aguardar resposta
     print("Aguardando resposta do servidor...")
-    display_lcd("Aguardando @o servidor...")
+    display.stop_display()
+    display.start_display("Aguardando @o servidor...")
     sock.settimeout(5)
     try:
         data, addr = sock.recvfrom(1024)
         print(f"Resposta recebida: {(data).decode('utf-8')} de {addr}")
-        display_lcd(f"Resposta: {(data).decode('utf-8')} de {addr}")
+        display.stop_display()
+        display.start_display(f"Resposta: {(data).decode('utf-8')} de {addr}")
         return [addr[0], data]
     except socket.timeout:
         return None

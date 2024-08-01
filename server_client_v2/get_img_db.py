@@ -1,5 +1,7 @@
 import os, client_grpc_JSON as client
-from display_1602a import display_lcd
+from display_1602a import LCDTask
+
+display = LCDTask()
 
 def save_file(file_bytes: bytes, filename: str) -> None:
     """
@@ -44,9 +46,11 @@ def get_img_db(server_ip: str, id_turma: str):
         except:
             print("Não foi possível extrair o arquivo")
         progress += '>' 
-        display_lcd(progress)
+        display.stop_display()
+        display.start_display(progress)
         if saida.name == 'True':
-            display_lcd('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+            display.stop_display()
+            display.start_display('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
             return True
     return False
 
