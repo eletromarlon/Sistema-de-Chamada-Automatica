@@ -131,6 +131,7 @@ while KeyboardInterrupt:
             #print(f'Dia/Mes/Ano {tempo[2]}/{tempo[1]}/{tempo[0]}')
             #print(f"Rosto encontrado {saida.name}")
             display.stop_display()
-            display.start_display(f'Nome {saida[0]}', time=3)
+            display.start_display(f'Nome {saida[0]}')
+            time.sleep(3)
         except:
             ('Erro na finalização dos dados.')
