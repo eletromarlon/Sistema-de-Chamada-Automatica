@@ -6,6 +6,7 @@ from cam_auto_take import take_photo
 from get_img_db import get_img_db
 from display_1602a import LCDTask
 from sca_recognizer import face_compare
+from server_client_v2.teste import TURMA
 
 SCA_LOG = [] #
 
@@ -13,6 +14,10 @@ turma = '01A'
 disciplina = 'DC' 
 
 display = LCDTask()
+
+def clean_img_db(turma: str):
+    for dado in os.listdir(f'img_db/{turma}'):
+        os.system(f"rm -rf {dado}")
 
 def sys_path():
         return os.getcwd()
@@ -91,10 +96,10 @@ def get_ip():
 
 
 # Captura o endereço do servidor, só será usado durante o início do sistema. Enquanto não se encontre o endereço o laço não terminará
-server_ip = get_ip()    
-
+server_ip = get_ip()
 # baixa as imagens da turma
 inicio = time.time()
+clean_img_db(turma)
 sys_start(type=1, turma=turma, server_ip=server_ip, image='')
 fim = time.time()
 display.stop_display()
