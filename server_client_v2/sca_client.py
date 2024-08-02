@@ -6,7 +6,6 @@ from cam_auto_take import take_photo
 from get_img_db import get_img_db
 from display_1602a import LCDTask
 from sca_recognizer import face_compare
-from server_client_v2.teste import TURMA
 
 SCA_LOG = [] #
 
