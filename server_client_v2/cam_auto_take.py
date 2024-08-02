@@ -1,7 +1,7 @@
 from copyreg import dispatch_table
 import cv2, os
 import cv2.data
-from picamera2 import Picamera2
+from picamera2 import Picamera2 # type: ignore
 from time import sleep
 from display_1602a import LCDTask
 
@@ -109,7 +109,7 @@ def take_photo(
 
                 print("Rosto detectado! Imagem registrada.")
                 display.stop_display()
-                display.start_display("Pronto! Já estou@Te reconhecendo", time=1)
+                display.start_display("Pronto! Já estou@Te reconhecendo")
                 
                 # Termina o loop para evitar que tire mais de uma foto por detecção de rosto
                 break

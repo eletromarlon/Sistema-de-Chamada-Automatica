@@ -79,7 +79,6 @@ def sys_start(
             print(f"Rosto encontrado {saida.name}")
             display.stop_display()
             display.start_display(f'{saida.id_aluno}-{tempo[2]}/{tempo[1]}/{tempo[0]}@{saida.name} - ({fim - inicio})', time=3)
-            time.sleep(3)
         except:
             ('Erro na finalização dos dados.')
     return None
@@ -131,6 +130,7 @@ while KeyboardInterrupt:
             #SCA_LOG.append([saida.name, tempo])
             #print(f'Dia/Mes/Ano {tempo[2]}/{tempo[1]}/{tempo[0]}')
             #print(f"Rosto encontrado {saida.name}")
+            print(saida[0])
             display.stop_display()
             display.start_display(f'Nome {saida[0]}')
             time.sleep(3)
