@@ -17,6 +17,7 @@ display = LCDTask()
 def clean_img_db(turma: str):
     for dado in os.listdir(f'img_db/{turma}'):
         os.system(f"rm -rf {dado}")
+    print(f'Todos os dados de {turma} excluídos')
 
 def sys_path():
         return os.getcwd()
