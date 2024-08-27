@@ -1,4 +1,5 @@
 from concurrent import futures
+from random import randint
 from sca_recognizer import face_compare, pkl_generator
 from sca_discover_server import run_server
 from db_operations import DatabaseManager
@@ -46,7 +47,7 @@ class EnvioDeMensagensServicer(grpc_image2_pb2_grpc.EnvioDeMensagensServicer):
     def status_frequencia(self, banco, matricula, aula):
         db = self.db_ops(banco)
         print(matricula)
-        saida = db.read("Frequencia", {'matricula_aluno': matricula, 'codigo_aula': aula}) # Verifica se há registro da matricula para esta aula
+        saida = db.read("Aula_Aluno", {'matricula_aluno': matricula, 'id_aula': aula}) # Verifica se há registro da matricula para esta aula
         db.close()
         try:
             if saida[0][1] == matricula: # 
@@ -54,27 +55,6 @@ class EnvioDeMensagensServicer(grpc_image2_pb2_grpc.EnvioDeMensagensServicer):
                 return True
         except:
             return False
-    
-    def gerar_frequencia(self, banco, matricula, disciplina, data):
-        db = self.db_ops(banco)
-
-        today = self.time_today() # saida dd mm para comparar dia de hoje com a aula
-
-        for i in db.read('Aula'): # Olha as aulas cadastradas no banco
-            data_aula = self.get_time_components(float(i[2])) # Transforma timestump em discionario de data
-            if data_aula['dia'] == today[0] and data_aula['mes'] == today[1] and i[1] == disciplina: # Caso haja aula previstas para a turma no dia e mÊs que o reguistro 
-                aula = i[0] # Caso verdade aula recebe o código da aula prevista para hoje
-                print(f"Aula {aula}")
-                print(f"Saida de status_frequencia {self.status_frequencia(banco, matricula, aula)}")
-                if not self.status_frequencia(banco, matricula, aula): # Verificar se já há registro desse aluno na frequencia para hoje
-                    db.create('Aula_Aluno', {'matricula_aluno': matricula, # Gera a frequencia para aquele aluno
-                                            'codigo_aula': aula,
-                                            'presente': '1',
-                                            'data': data})
-                else:
-                    print(f"Não haverá aula {data_aula} ou registro já feito!")
-        
-        db.close()
     
     def reshape_img(self, shape, image):
         try:
@@ -136,6 +116,52 @@ class EnvioDeMensagensServicer(grpc_image2_pb2_grpc.EnvioDeMensagensServicer):
                     return arq, False
         return b'vazio', True
         
+    def gerar_frequencia(self, banco, matricula, disciplina, data):
+        db = self.db_ops(banco)
+
+        today = self.get_time_components(data) # saida dd mm para comparar dia de hoje com a aula
+
+        print(today)
+
+        disciplina_aulas = db.read('Aula', {'codigo_disciplina': disciplina})
+
+        for aula in disciplina_aulas:
+            data_aula = self.get_time_components(aula[2])
+            data_aula_atual_int = int(str(data_aula['dia'])+str(data_aula['mes'])+str(data_aula['ano']))
+            data_hoje_int = int(str(today['dia'])+str(today['mes'])+str(today['ano']))
+            print(data_aula_atual_int, data_hoje_int)
+            if data_aula_atual_int == data_hoje_int:
+                id_aula = aula[0]
+                if not self.status_frequencia(banco, matricula, id_aula):
+                    db.create('Aula_Aluno', {'matricula_aluno': matricula, # Gera a frequencia para aquele aluno
+                                                    'id_aula': id_aula,
+                                                    'presente': '1',
+                                                    'data_aula': data})   
+                db.close()
+                return True
+
+        '''for aulas in (db.read('Aula', {'codigo_disciplina': disciplina})): # Olha as aulas cadastradas no banco
+            try:
+                data_aula = self.get_time_components((aulas[2])) # Transforma timestump em discionario de data
+            except:
+                print('Erro em data_aula')
+            print(f'Dados recebidos - {data_aula["dia"]/{data_aula["mes"]}}')
+            if data_aula['dia'] == today[0] and data_aula['mes'] == today[1] and aulas[1] == disciplina: # Caso haja aula previstas para a turma no dia e mÊs que o reguistro 
+                aula = aulas[0] # Caso verdade aula recebe o código da aula prevista para hoje
+                print(f"Aula {aula}")
+                print(f"Saida de status_frequencia {self.status_frequencia(banco, matricula, aula)}")
+                if not self.status_frequencia(banco, matricula, aula): # Verificar se já há registro desse aluno na frequencia para hoje
+                    db.create('Aula_Aluno', {'matricula_aluno': matricula, # Gera a frequencia para aquele aluno
+                                            'codigo_aula': aula,
+                                            'presente': '1',
+                                            'data': data})
+                    return True
+                else:
+                    print(f"Não haverá aula {data_aula} ou registro já feito!")
+                    return False'''
+        
+        
+
         '''
         for aluno_folder in os.listdir(folder_path):
             if aluno_folder.find('.pkl') == -1:
@@ -215,9 +241,12 @@ class EnvioDeMensagensServicer(grpc_image2_pb2_grpc.EnvioDeMensagensServicer):
             except:
                 matricula = result[0]
 
-            print(matricula)
+            try:
+                os.system(f'cp image.jpg ./img_experimento/{matricula}-result-{randint(0, 1000)}.jpg')
+            except:
+                os.system(f'cp image.jpg ./img_experimento/UNKNOWN-result-{randint(0, 1000)}.jpg')
 
-            self.gerar_frequencia('teste.db', matricula, request.id_disciplina, request.time)
+            print(self.gerar_frequencia('sca_db', matricula, request.id_disciplina, request.time))
 
             # Preenchendo os valores da resposta do servidor para o cliente
             response = grpc_image2_pb2.ServidorParaCliente()
